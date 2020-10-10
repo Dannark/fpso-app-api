@@ -1,9 +1,6 @@
 # FPSO Management Backend
 This project is to demonstrate how to get a simple backend with docker
 
-# FPSO Management Backend
-
-
 ## Workflow
 ![FPSO Management Backend Flow](https://user-images.githubusercontent.com/7622553/95643418-6f598d00-0a85-11eb-91ae-89023806aae9.png)
 
