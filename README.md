@@ -10,6 +10,8 @@ This project is to demonstrate how to get a simple backend with docker
 
 ## Functionalities
 * Registering a vessel
+* Get the list of vessel
+* Get Especifc Vessel
 * Registering a new equipment in a vessel
 * Setting an equipment’s status to inactive
 * Returning all active equipment of a vessel

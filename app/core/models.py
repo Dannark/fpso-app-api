@@ -15,7 +15,7 @@ class VesselManager(object):
 
 class EquipmentManager(object):
 
-    def create(self, code, name, location, vessel_code, status=True):
+    def create(self, code, name, location, vessel_code, status='active'):
 
         if not code:
             raise ValueError("Equipment code can't be empty")
@@ -46,4 +46,4 @@ class Equipment(models.Model):
     name = models.CharField(max_length=200)
     vessel_code = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
-    status = models.BooleanField(default=True)
+    status = models.CharField(max_length=200, default='active')
