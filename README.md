@@ -1,5 +1,5 @@
 # FPSO Management Backend
-This project is to demonstrate how to get a simple backend API with docker and travis with django.
+This project is to demonstrate how to get a simple backend API with docker and travis with django!
 
 ## Workflow
 [![FPSO Management Backend Flow](https://user-images.githubusercontent.com/7622553/95813333-088adc80-0cee-11eb-9beb-805238d8f9df.png)](https://whimsical.com/UG7Yb1dtYLgPRB7JBnRjoe)
