@@ -21,6 +21,8 @@ This project is to demonstrate how to get a simple backend API with docker and t
 2. To run the tests with lint flake8 use:
     `docker-compose run app sh -c "python manage.py test && flake8"`
 
+For all urls bellow, you can use to `https://fpso-app-api.herokuapp.com/api` instead
+
 #### Registering a vessel
 To register a new Vessel use `PUT` method on the Url: `http://127.0.0.1:8000/api/vessels/create` with:
 **Body Json:**
