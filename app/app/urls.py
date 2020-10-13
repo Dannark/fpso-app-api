@@ -15,13 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core import views
+from django.conf.urls import include
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('vessels', views.vessel_list, name="vessel-list"),
-    path('vessel/<str:vessel_code>', views.vessel, name='vessel'),
-    path('equipments', views.equipments_list, name='equipment-detail'),
-    path('equipment/<str:vessel_code>', views.equipment, name='equipment'),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('api/', include('core.urls'))
 ]

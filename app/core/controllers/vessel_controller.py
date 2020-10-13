@@ -1,67 +1,60 @@
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
+from rest_framework import status, exceptions
 from core.models import Vessel
 from core.serializers import VesselSerializer
 
 
-def vessel_controller(req):
-    if req.method == 'GET':
-        return JsonResponse({'error':'This operation is not allowed from this request'}, status=400)
-
-    elif req.method == 'POST':
-        return get_vessel_list(req)
-
-    elif req.method == 'PUT':
-        return create_vessel(req)
-
-
 def get_vessel(req, code):
-    if req.method == 'DELETE':
-        return delete_vessel(req)
-    
-    else:
-        try:
-            vessel = Vessel.objects.get(code=code)
-        except Vessel.DoesNotExist:
-            return JsonResponse({'error':'No Vessel found with this code'}, status=404)
-
-        serializer = VesselSerializer(vessel)
-        return JsonResponse(serializer.data)
-
-def delete_vessel(req, code):
     try:
         vessel = Vessel.objects.get(code=code)
-        vessel.delete()
-        HttpResponse(status=204)
     except Vessel.DoesNotExist:
-        return JsonResponse({'error':'No Vessel found with this code'}, status=404)
+        return JsonResponse({'error': 'No Vessel found with this code'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+    serializer = VesselSerializer(vessel)
+    return JsonResponse(serializer.data)
 
 
 def get_vessel_list(req):
     vessel = Vessel.objects.all()
     serializer = VesselSerializer(vessel, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
 
 
 def create_vessel(req):
     try:
         vessels = JSONParser().parse(req)
+    except exceptions.ParseError:
+        return JsonResponse({'error': "The input is invalid"},
+                            status=status.HTTP_400_BAD_REQUEST)
 
-        for index, item in enumerate(vessels):
-            try:
-                code = item['code']
-            except:
-                return JsonResponse({'error':f"Invalid input at index [{index}]"}, status=400)
+    err = _validate_item(vessels)
+    if err is not None:
+        return err
 
-            try:
-                vessel = Vessel.objects.get(code=code)
+    err = _checks_if_item_exists(vessels)
+    if err is not None:
+        return err
 
-                return JsonResponse({'error':'This Vessel already exists'}, status=409)
-            except Vessel.DoesNotExist:
-                # vessel = Vessel(code=code)
-                # vessel.save()
-                pass
-    except:
-        return JsonResponse({'error':"The input is invalid"}, status=400)
+    vessel = Vessel(code=vessels['code'])
+    vessel.save()
 
-    return HttpResponse(status=200)
+    return HttpResponse(status=status.HTTP_201_CREATED)
+
+
+def _validate_item(item, fields=['code']):
+    for field in fields:
+        if field not in item:
+            r = {'error': "The input has invalid or missing values"}
+            return JsonResponse(r, status=status.HTTP_400_BAD_REQUEST)
+
+
+def _checks_if_item_exists(item):
+    try:
+        Vessel.objects.get(code=item['code'])
+        return JsonResponse({'error': 'This vessel already exists'},
+                            status=status.HTTP_409_CONFLICT)
+    except Vessel.DoesNotExist:
+        # if not, then continue code
+        pass
