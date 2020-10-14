@@ -27,9 +27,9 @@ You can try it alive in `https://fpso-app-api.herokuapp.com/api`
 To register a new Vessel use `PUT` method on the Url: `http://127.0.0.1:8000/api/vessels/create` with:
 
 **Body Json:**
-```python
+```yaml
 {
-	"code":"MV102"
+  "code": "MV102"
 }
 ```
 
@@ -40,11 +40,11 @@ To get the list of Vessels use `GET` or `POST` method on the url: `http://127.0.
 To register a new equipment use `PUT` method on the the following url with the `code` at the end, for example `http://127.0.0.1:8000/api/equipment/create/MV102`
 
 **Body Json:**
-```python
+```yaml
 {
-	"code": "5310B9D7",
-	"name": "compressor",
-	"location": "Brazil"
+  "code": "5310B9D7",
+  "name": "compressor",
+  "location": "Brazil"
 }
 ```
 
@@ -52,16 +52,16 @@ To register a new equipment use `PUT` method on the the following url with the `
 To update an equipment use `http://127.0.0.1:8000/api/equipment/update`
 
 **Body Json:**
-```python
+```yaml
 [
-	{
-		"code":"5310B9D7",
-		"status":"active"
-	},
+  {
+    "code": "5310B9D7",
+    "status": "active"
+  },
     {
-		"code":"5310B9D8",
-		"status":"inactive"
-	},
+    "code": "5310B9D8",
+    "status": "inactive"
+  },
 ]
 ```
 
@@ -71,18 +71,18 @@ To get the list of all equipments use `GET` or `POST` method on the url: `http:/
 If you want to get filter by status pass on the body:
 
 **Body Json:**
-```python
+```yaml
 {
-	"status":"active"
+  "status": "active"
 }
 ```
 
 Or with multiple filters:
 
 **Body Json:**
-```python
+```yaml
 {
-	"status":"active",
-	"vessel_code":"MV102"
+  "status": "active",
+  "vessel_code": "MV102"
 }
 ```
