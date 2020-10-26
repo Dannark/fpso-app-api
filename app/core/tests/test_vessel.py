@@ -9,8 +9,9 @@ class VesselTestCase(TestCase):
     def get(self, url):
         return self.client.get(url)
 
-    def post(self, url):
-        return self.client.post(url)
+    def post(self, url, payload):
+        return self.client.post(url, payload,
+                                content_type="application/json")
 
     def put(self, url, payload):
         return self.client.put(url, payload,
@@ -26,7 +27,7 @@ class VesselTestCase(TestCase):
     def test_url_vessel_empty_list(self):
         """Checks if a empty list is returned"""
         url = reverse('vessel-list')
-        response = self.post(url)
+        response = self.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_vessel_invalid_input(self):
@@ -35,7 +36,7 @@ class VesselTestCase(TestCase):
         payload = json.dumps({
             "code2": "MV101"
         })
-        response = self.put(url, payload)
+        response = self.post(url, payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_url_create_vessel(self):
@@ -51,7 +52,7 @@ class VesselTestCase(TestCase):
         payload = json.dumps({
             "code": "MV101"
         })
-        response = self.put(url, payload)
+        response = self.post(url, payload)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def helper_test_create_vessel_duplicated(self):
@@ -60,13 +61,13 @@ class VesselTestCase(TestCase):
         payload = json.dumps({
             "code": "MV101"
         })
-        response = self.put(url, payload)
+        response = self.post(url, payload)
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
     def helper_test_vessel_non_empty_list(self):
         """Checks if a non-empty list is returned"""
         url = reverse('vessel-list')
-        response = self.post(url)
+        response = self.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         json_data = json.loads(response.content)

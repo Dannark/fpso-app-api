@@ -9,10 +9,7 @@ class EquipmentTestCase(TestCase):
     def get(self, url):
         return self.client.get(url)
 
-    def post(self, url):
-        return self.client.post(url)
-
-    def post_json(self, url, body):
+    def post(self, url, body):
         return self.client.post(url, body,
                                 content_type="application/json")
 
@@ -31,7 +28,7 @@ class EquipmentTestCase(TestCase):
     def test_url_equipment_empty_list(self):
         """Checks if a empty list is returned"""
         url = reverse('equipment-list')
-        response = self.post(url)
+        response = self.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_url_create_equipment_invalid_input(self):
@@ -45,7 +42,7 @@ class EquipmentTestCase(TestCase):
             "code": "5310B9D7",
             "name": "compressor"
         })
-        response = self.put(url, body)
+        response = self.post(url, body)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_url_equipment_update_invalid_input(self):
@@ -57,7 +54,7 @@ class EquipmentTestCase(TestCase):
                 "status": "inactive"
             }
         ])
-        response = self.post_json(url, body)
+        response = self.put(url, body)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_url_equipment_update_list(self):
@@ -72,7 +69,7 @@ class EquipmentTestCase(TestCase):
                 "status": "inactive"
             }
         ])
-        response = self.post_json(url, body)
+        response = self.put(url, body)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_equipment_update_inexistence(self):
@@ -84,7 +81,7 @@ class EquipmentTestCase(TestCase):
                 "status": "active"
             }
         ])
-        response = self.post_json(url, body)
+        response = self.put(url, body)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_url_create_equipment(self):
@@ -103,7 +100,7 @@ class EquipmentTestCase(TestCase):
             "name": "compressor",
             "location": "Brazil"
         })
-        response = self.put(url, body)
+        response = self.post(url, body)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def helper_test_create_equipment_successfully(self, vessel_code="MV404",
@@ -112,7 +109,7 @@ class EquipmentTestCase(TestCase):
         # First create the missing Vessel
         url = reverse('vessel-create')
         body = json.dumps({"code": vessel_code})
-        response = self.put(url, body)
+        response = self.post(url, body)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Try creating the equipment again with the associated Vessel
@@ -122,7 +119,7 @@ class EquipmentTestCase(TestCase):
             "name": "compressor",
             "location": "Brazil"
         })
-        response = self.put(url, body)
+        response = self.post(url, body)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def helper_test_create_equipment_duplicated(self):
@@ -133,13 +130,13 @@ class EquipmentTestCase(TestCase):
             "name": "compressor",
             "location": "Brazil"
         })
-        response = self.put(url, body)
+        response = self.post(url, body)
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
     def helper_test_equipment_non_empty_list(self):
         """Checks if a non-empty list is returned"""
         url = reverse('equipment-list')
-        response = self.post(url)
+        response = self.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         json_data = json.loads(response.content)

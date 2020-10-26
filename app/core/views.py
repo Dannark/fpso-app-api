@@ -20,7 +20,7 @@ def index(req):
 
 @csrf_exempt
 def vessel_list(req):
-    if req.method in ['POST', 'GET']:
+    if req.method in ['GET']:
         return get_vessel_list(req)
     else:
         return not_allowed_response()
@@ -28,7 +28,7 @@ def vessel_list(req):
 
 @csrf_exempt
 def vessel_create(req):
-    if req.method == 'PUT':
+    if req.method == 'POST':
         return create_vessel(req)
     else:
         return not_allowed_response()
@@ -36,7 +36,7 @@ def vessel_create(req):
 
 @csrf_exempt
 def equipments_list(req):
-    if req.method in ['POST', 'GET']:
+    if req.method in ['GET']:
         return get_equipment_list(req)
     else:
         return not_allowed_response()
@@ -44,7 +44,7 @@ def equipments_list(req):
 
 @csrf_exempt
 def equipment_create(req, vessel_code):
-    if req.method == 'PUT':
+    if req.method == 'POST':
         return create_equipment(req, vessel_code)
     else:
         return not_allowed_response()
@@ -52,7 +52,7 @@ def equipment_create(req, vessel_code):
 
 @csrf_exempt
 def equipment_update(req):
-    if req.method in ['POST', 'GET']:
+    if req.method in ['PUT']:
         return update_equipment(req)
     else:
         return not_allowed_response()

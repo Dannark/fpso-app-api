@@ -26,6 +26,7 @@ SECRET_KEY = 'iven923_*(qkgv*a26c+k@m9t(bs&3+o3363-3b@3*(osx)7l-'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'fpso-app-api.herokuapp.com'
 ]
 

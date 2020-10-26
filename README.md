@@ -23,8 +23,8 @@ You can try it alive in `https://fpso-app-api.herokuapp.com/api`
 
 **Note:** You can also try it alive in `https://fpso-app-api.herokuapp.com/api`
 
-#### Registering a vessel
-To register a new Vessel use `PUT` method on the Url: `http://127.0.0.1:8000/api/vessels/create` with:
+### Registering a vessel
+To register a new Vessel use `POST` method on the Url: `http://127.0.0.1:8000/api/vessels/create` with:
 
 **Body Json:**
 ```yaml
@@ -33,11 +33,11 @@ To register a new Vessel use `PUT` method on the Url: `http://127.0.0.1:8000/api
 }
 ```
 
-#### Get the list of vessel
-To get the list of Vessels use `GET` or `POST` method on the url: `http://127.0.0.1:8000/api/vessels`
+### Get the list of vessel
+To get the list of Vessels use `GET` method on the url: `http://127.0.0.1:8000/api/vessels`
 
-#### Registering a new equipment in a vessel
-To register a new equipment use `PUT` method on the the following url with the `code` at the end, for example `http://127.0.0.1:8000/api/equipment/create/MV102`
+### Registering a new equipment in a vessel
+To register a new equipment use `POST` method on the the following url with the `code` at the end, for example `http://127.0.0.1:8000/api/equipment/create/MV102`
 
 **Body Json:**
 ```yaml
@@ -48,8 +48,8 @@ To register a new equipment use `PUT` method on the the following url with the `
 }
 ```
 
-#### Setting an equipment’s status to inactive
-To update an equipment use `http://127.0.0.1:8000/api/equipment/update`
+### Setting an equipment’s status to inactive
+To update an equipment use `PUT` method on the url `http://127.0.0.1:8000/api/equipment/update`
 
 **Body Json:**
 ```yaml
@@ -65,8 +65,8 @@ To update an equipment use `http://127.0.0.1:8000/api/equipment/update`
 ]
 ```
 
-#### Returning all active equipment of a vessel
-To get the list of all equipments use `GET` or `POST` method on the url: `http://127.0.0.1:8000/api/equipments/`
+### Returning all active equipment of a vessel
+To get the list of all equipments use `GET` method on the url: `http://127.0.0.1:8000/api/equipments/`
 
 If you want to get filter by status pass on the body:
 
